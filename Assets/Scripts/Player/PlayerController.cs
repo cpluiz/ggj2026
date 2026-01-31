@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 using cpluiz.GameEventSystem;
 using System.ComponentModel;
+using UnityEngine.SceneManagement;
 
 namespace cpluiz.Maskformer.Player
 {
@@ -27,6 +28,7 @@ namespace cpluiz.Maskformer.Player
             rb = GetComponent<Rigidbody2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             maskSettings.Value.currentMask.SetCurrentAnimationSprites(currentPlayerAnimation);
+            SceneManager.activeSceneChanged += ClearAllMasks;
         }
 
         public void HorizontalWalk(InputAction.CallbackContext contextParameter)
@@ -92,6 +94,10 @@ namespace cpluiz.Maskformer.Player
                 rb.gravityScale = 1;
             }
             maskSettings.Value.currentMask.SetCurrentAnimationSprites(currentPlayerAnimation);
+        }
+        protected void ClearAllMasks(Scene current, Scene next)
+        {
+            maskSettings.Value = maskSettings.DefaultValue;
         }
         public void ChangeMask(int maskID)
         {
