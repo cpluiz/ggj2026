@@ -7,7 +7,7 @@
       "dependencies": {
         "com.yasirkula.assetusagedetector": "https://github.com/yasirkula/UnityAssetUsageDetector.git#v2.5.7"
       },
-      "hash": "33c981ec0f8bf8f366f1b99286334d3f3d1e8c3b"
+      "hash": "acf4ef374ad07647abc1c52814b9492b2884bcff"
     },
     "com.unity.2d.animation": {
       "version": "10.2.2",

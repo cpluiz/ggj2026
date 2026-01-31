@@ -12,7 +12,9 @@ namespace cpluiz.GameEventSystem
         public void SetMask(int maskId)
         {
             value.currentSelectedMask = maskId;
+            #if UNITY_EDITOR
             EditorUtility.SetDirty(this);
+            #endif
             ForceUpdate();
         }
         public void NextMask()

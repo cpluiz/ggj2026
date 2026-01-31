@@ -1,10 +1,12 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace cpluiz.Maskformer.Environment
 {
     public class LockedDoor : MonoBehaviour
     {
+        public int nextLevelID;
         [SerializeField] protected Collider2D doorCollider;
         [SerializeField] protected Transform closedDoorObject;
         protected SpriteRenderer[] closedDoorSprites;
@@ -22,8 +24,16 @@ namespace cpluiz.Maskformer.Environment
         }
         public void ToggleLockedStatus(bool lockedStatus)
         {
-            doorCollider.enabled = lockedStatus;
+            doorCollider.isTrigger = !lockedStatus;
             Fade(lockedStatus ? 1 : 0, 0.5f);
+        }
+
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+            {
+                SceneManager.LoadScene(nextLevelID);
+            }
         }
     }
 }
