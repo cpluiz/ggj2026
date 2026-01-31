@@ -15,6 +15,7 @@ namespace cpluiz.Maskformer
         public float walkSpeed;
         public bool canPushObjects;
         public bool canJumpInWalls;
+        public bool canInteractWithObjects;
         public void SetCurrentAnimationSprites(CurrentPlayerAnimation currentPlayerAnimation)
         {
             switch (currentPlayerAnimation)

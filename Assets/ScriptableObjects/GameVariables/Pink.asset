@@ -26,4 +26,5 @@ MonoBehaviour:
   jumpForce: 1
   walkSpeed: 1
   canPushObjects: 0
-  canJumpInWalls: 1
+  canJumpInWalls: 0
+  canInteractWithObjects: 1
