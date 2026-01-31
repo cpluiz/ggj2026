@@ -41,7 +41,7 @@ namespace cpluiz.Maskformer.Environment
             if (collision.CompareTag("Player"))
             {
                 int currentSceneId = SceneManager.GetActiveScene().buildIndex;
-                SceneManager.LoadScene((currentSceneId + 1) % SceneManager.sceneCount);
+                SceneManager.LoadScene((currentSceneId + 1) % SceneManager.sceneCountInBuildSettings);
             }
         }
     }

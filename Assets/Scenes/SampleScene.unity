@@ -30037,7 +30037,7 @@ MonoBehaviour:
   nextLevelID: 0
   doorCollider: {fileID: 866983489}
   closedDoorObject: {fileID: 1856081616}
-  isDoorForNextLevel: 0
+  isDoorForNextLevel: 1
 --- !u!4 &866983491
 Transform:
   m_ObjectHideFlags: 0
