@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8c975c835276cf49964d42e95f66293, type: 3}
-  m_Name: RedDoorEvent
+  m_Name: OrangeDoorEvent
   m_EditorClassIdentifier: 
   debugVoid: 0
   debugBool: 0

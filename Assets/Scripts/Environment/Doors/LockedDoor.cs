@@ -9,6 +9,7 @@ namespace cpluiz.Maskformer.Environment
         public int nextLevelID;
         [SerializeField] protected Collider2D doorCollider;
         [SerializeField] protected Transform closedDoorObject;
+        [SerializeField] protected bool isDoorForNextLevel;
         protected SpriteRenderer[] closedDoorSprites;
 
         void Awake()
@@ -24,7 +25,14 @@ namespace cpluiz.Maskformer.Environment
         }
         public void ToggleLockedStatus(bool lockedStatus)
         {
-            doorCollider.isTrigger = !lockedStatus;
+            if (isDoorForNextLevel)
+            {
+                doorCollider.isTrigger = !lockedStatus;
+            }
+            else
+            {
+                doorCollider.enabled = lockedStatus;
+            }
             Fade(lockedStatus ? 1 : 0, 0.5f);
         }
 
@@ -32,7 +40,8 @@ namespace cpluiz.Maskformer.Environment
         {
             if (collision.CompareTag("Player"))
             {
-                SceneManager.LoadScene(nextLevelID);
+                int currentSceneId = SceneManager.GetActiveScene().buildIndex;
+                SceneManager.LoadScene((currentSceneId + 1) % SceneManager.sceneCount);
             }
         }
     }
