@@ -619,6 +619,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4140324198865699607}
   - component: {fileID: 3433993275479040456}
+  - component: {fileID: 2684681014114166845}
   m_Layer: 10
   m_Name: Trap
   m_TagString: Untagged
@@ -697,6 +698,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 6.43884, y: 0.5477905}
   m_EdgeRadius: 0
+--- !u!114 &2684681014114166845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853539618484585086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4150348b1db95bd419639b06fe982fec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnPoint: {fileID: 1508188692220040760}
 --- !u!1 &7944768154724367699
 GameObject:
   m_ObjectHideFlags: 0
