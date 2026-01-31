@@ -1,0 +1,18 @@
+{
+    "name": "Maskformer.Player",
+    "rootNamespace": "cpluiz.Maskformer.Player",
+    "references": [
+        "GUID:26f5cf095d4f6e245a9ca3923d28fb99",
+        "GUID:13b458b026ca32a4f8b51f18940e1ce4",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

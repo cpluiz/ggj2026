@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6e103a58eff58447beed270fa464815, type: 3}
+  m_Name: Green
+  m_EditorClassIdentifier: 
+  maskSprite: {fileID: 1039819007915699783, guid: 59e5f80da7530ec41bd8ed12c674f093, type: 3}
+  idleSprites:
+  - {fileID: -5219749522636181100, guid: baebe7ab94775834f99bae2b52d18f8e, type: 3}
+  walkingSprites:
+  - {fileID: 5523752416802400048, guid: baebe7ab94775834f99bae2b52d18f8e, type: 3}
+  - {fileID: -3415446647271263865, guid: baebe7ab94775834f99bae2b52d18f8e, type: 3}
+  jumpingSprites:
+  - {fileID: -7906785423871200809, guid: baebe7ab94775834f99bae2b52d18f8e, type: 3}
+  currentAnimationSprites:
+  - {fileID: -5219749522636181100, guid: baebe7ab94775834f99bae2b52d18f8e, type: 3}
+  gravityModifier: 1
+  jumpForce: 1.3
+  walkSpeed: 1
+  canPushObjects: 0
+  canJumpInWalls: 0

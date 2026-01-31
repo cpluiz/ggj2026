@@ -1,0 +1,16 @@
+{
+    "name": "Maskformer",
+    "rootNamespace": "cpluiz.Maskformer",
+    "references": [
+        "GUID:13b458b026ca32a4f8b51f18940e1ce4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
