@@ -1,6 +1,7 @@
 using UnityEngine;
 using cpluiz.Maskformer.Player;
 using cpluiz.GameEventSystem;
+using System.ComponentModel;
 
 namespace cpluiz.Maskformer.Environment
 {
@@ -9,46 +10,55 @@ namespace cpluiz.Maskformer.Environment
     {
         [SerializeField] protected Rigidbody2D rb;
         [SerializeField] private CharacterMaskSettingGameVariable maskSettings;
-        private bool isPushing;
+        [SerializeField, ReadOnly(true)] private bool isPushing;
+        [SerializeField, ReadOnly(true)] private bool isTouchingPlayer;
         public void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             rb.bodyType = RigidbodyType2D.Kinematic;
+        }
+        void OnEnable()
+        {
+            maskSettings.OnValueChanged.AddListener(MaskChanged);
+        }
+        void OnDisable()
+        {
+            maskSettings.OnValueChanged.RemoveListener(MaskChanged);
+        }
+
+        private void MaskChanged()
+        {
+            TogglePushState();
         }
 
         void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                if (maskSettings.Value.currentMask.canPushObjects)
-                {
-                    isPushing = true;
-                    rb.bodyType = RigidbodyType2D.Dynamic;
-                }
+                isTouchingPlayer = true;
+                TogglePushState();
             }
         }
         void OnCollisionExit2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("Player") && isPushing)
             {
-                DisablePushableState();
+                isTouchingPlayer = false;
+                TogglePushState();
             }
         }
 
-        void LateUpdate()
+        protected void TogglePushState()
         {
-            if(isPushing && !maskSettings.Value.currentMask.canPushObjects)
+            if(!isTouchingPlayer && !isPushing) return;
+            
+            isPushing = isTouchingPlayer && maskSettings.Value.currentMask.canPushObjects;
+            rb.bodyType = isPushing ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic;
+            if (!isPushing)
             {
-                DisablePushableState();
+                rb.angularVelocity = 0;
+                rb.linearVelocity = Vector2.zero;
             }
-        }
-
-        protected void DisablePushableState()
-        {
-            isPushing = false;
-            rb.angularVelocity = 0;
-            rb.linearVelocity = Vector2.zero;
-            rb.bodyType = RigidbodyType2D.Kinematic;
         }
 
     }

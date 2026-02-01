@@ -27,15 +27,20 @@ namespace cpluiz.Maskformer.Player
         {
             rb = GetComponent<Rigidbody2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+            maskSettings.OnValueChanged.AddListener(MaskUpdated);
             maskSettings.Value.currentMask.SetCurrentAnimationSprites(currentPlayerAnimation);
             SceneManager.activeSceneChanged += ClearAllMasks;
+        }
+        void Oestroy()
+        {
+            maskSettings.OnValueChanged.RemoveListener(MaskUpdated);
         }
 
         public void HorizontalWalk(InputAction.CallbackContext contextParameter)
         {
             if (contextParameter.phase == InputActionPhase.Performed)
             {
-                horizontalWalkValue = maskSettings.Value.currentMask.walkSpeed * contextParameter.ReadValue<Vector2>().x;
+                horizontalWalkValue = contextParameter.ReadValue<Vector2>().x;
             }
             if (contextParameter.phase == InputActionPhase.Canceled)
             {
@@ -57,7 +62,7 @@ namespace cpluiz.Maskformer.Player
 
         void FixedUpdate()
         {
-            transform.position = transform.position + new Vector3(horizontalWalkValue * moveSpeed, 0, 0);
+            transform.position = transform.position + Vector3.right * maskSettings.Value.currentMask.walkSpeed * horizontalWalkValue * moveSpeed;
         }
         void LateUpdate()
         {
@@ -68,6 +73,10 @@ namespace cpluiz.Maskformer.Player
                 currentAnimationFrame = (currentAnimationFrame + 1) % maskSettings.Value.currentMask.currentAnimationSprites.Length;
                 spriteRenderer.sprite = maskSettings.Value.currentMask.currentAnimationSprites[currentAnimationFrame];
             }
+        }
+        private void MaskUpdated()
+        {
+            
         }
         private void CheckIfAnimationHasChanged()
         {
