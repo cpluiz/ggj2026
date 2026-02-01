@@ -10,6 +10,7 @@ namespace cpluiz.Maskformer
         public Sprite[] walkingSprites;
         public Sprite[] jumpingSprites;
         public Sprite[] currentAnimationSprites;
+        public AudioClip jumpSFX;
         public float gravityModifier = 1;
         public float jumpForce;
         public float walkSpeed;

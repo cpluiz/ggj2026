@@ -23,8 +23,10 @@ MonoBehaviour:
   - {fileID: -8698137899768012495, guid: baebe7ab94775834f99bae2b52d18f8e, type: 3}
   currentAnimationSprites:
   - {fileID: -5851126222905327421, guid: baebe7ab94775834f99bae2b52d18f8e, type: 3}
+  jumpSFX: {fileID: 8300000, guid: 1c1a03780a477a44da908f102e8f68cd, type: 3}
   gravityModifier: 0.3
   jumpForce: 0.55
   walkSpeed: 1.1
   canPushObjects: 0
   canJumpInWalls: 0
+  canInteractWithObjects: 0

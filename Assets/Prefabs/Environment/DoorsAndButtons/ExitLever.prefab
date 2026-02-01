@@ -142,6 +142,8 @@ MonoBehaviour:
   unlockedLever: {fileID: 4660589528219966545}
   exitDoorEvent: {fileID: 11400000, guid: e0fe0af7fb7f7dc4495433bc2ff468e8, type: 2}
   maskSettings: {fileID: 11400000, guid: 9d5213667664c12419382252e192a16d, type: 2}
+  sfxEvent: {fileID: 11400000, guid: 0867ee5e81382734c83784d904b36030, type: 2}
+  doorUnlockedAudioClip: {fileID: 8300000, guid: 20b8a16278b3c5541bb9fe17b888fcb9, type: 3}
 --- !u!114 &3787829898188820540
 MonoBehaviour:
   m_ObjectHideFlags: 0

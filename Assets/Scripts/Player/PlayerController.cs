@@ -15,13 +15,18 @@ namespace cpluiz.Maskformer.Player
         [SerializeField] private float jumpForce = 1;
         [SerializeField] private CharacterMaskSettingGameVariable maskSettings;
         [SerializeField, ReadOnly(true)] private float horizontalWalkValue;
+        //TODO - Change sound list by type of floor
+        [SerializeField] private AudioClip[] stepClip;
+        [SerializeField] private AudioClip maskChangedSFX;
         private SpriteRenderer spriteRenderer;
         private Rigidbody2D rb;
         private int currentFrame;
         private int animationFrames = 20;
         private int currentAnimationFrame;
         private bool canJump;
+        private int preivousMaskID;
         [SerializeField] private CurrentPlayerAnimation currentPlayerAnimation;
+        [SerializeField] private GameEvent sfxEvent;
 
         void Awake()
         {
@@ -31,7 +36,7 @@ namespace cpluiz.Maskformer.Player
             maskSettings.Value.currentMask.SetCurrentAnimationSprites(currentPlayerAnimation);
             SceneManager.activeSceneChanged += ClearAllMasks;
         }
-        void Oestroy()
+        void OnDestroy()
         {
             maskSettings.OnValueChanged.RemoveListener(MaskUpdated);
         }
@@ -57,6 +62,7 @@ namespace cpluiz.Maskformer.Player
             if (contextParameter.phase == InputActionPhase.Started && canJump)
             {
                 rb.AddForceY(maskSettings.Value.currentMask.jumpForce * jumpForce, ForceMode2D.Impulse);
+                sfxEvent.Raise(maskSettings.Value.currentMask.jumpSFX);
             }
         }
 
@@ -72,11 +78,19 @@ namespace cpluiz.Maskformer.Player
             {
                 currentAnimationFrame = (currentAnimationFrame + 1) % maskSettings.Value.currentMask.currentAnimationSprites.Length;
                 spriteRenderer.sprite = maskSettings.Value.currentMask.currentAnimationSprites[currentAnimationFrame];
+                //TODO Implement better controll for walking sound effect
+                if (isTouchingGround.Value && stepClip.Length > 0 && horizontalWalkValue != 0 && currentAnimationFrame == 0)
+                {
+                    sfxEvent.Raise(stepClip[Random.Range(0, stepClip.Length)]);
+                }
             }
         }
         private void MaskUpdated()
         {
+            if(preivousMaskID == maskSettings.Value.currentSelectedMask) return;
             
+            preivousMaskID = maskSettings.Value.currentSelectedMask;
+            sfxEvent.Raise(maskChangedSFX);
         }
         private void CheckIfAnimationHasChanged()
         {

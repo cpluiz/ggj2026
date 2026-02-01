@@ -98,6 +98,8 @@ MonoBehaviour:
   unlockedButton: {fileID: 2749532534707655610}
   unlockDoorEvent: {fileID: 11400000, guid: d8c3ae8ed03d1e34c83650207ff2dd6c, type: 2}
   maskSettings: {fileID: 11400000, guid: 9d5213667664c12419382252e192a16d, type: 2}
+  sfxEvent: {fileID: 11400000, guid: 0867ee5e81382734c83784d904b36030, type: 2}
+  doorUnlockedAudioClip: {fileID: 8300000, guid: 2c36cec28673e9d43bd0194eea967a08, type: 3}
 --- !u!1 &5258039906080915412
 GameObject:
   m_ObjectHideFlags: 0

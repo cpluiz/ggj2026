@@ -12,6 +12,8 @@ namespace cpluiz.Maskformer.Environment
         [SerializeField] protected SpriteRenderer unlockedLever;
         [SerializeField] protected GameEvent exitDoorEvent;
         [SerializeField] private CharacterMaskSettingGameVariable maskSettings;
+        [SerializeField] private GameEvent sfxEvent;
+        [SerializeField] private AudioClip doorUnlockedAudioClip;
         private bool isTouchingPlayer;
         private bool alreadyInteracted;
 
@@ -60,6 +62,8 @@ namespace cpluiz.Maskformer.Environment
             if(!maskSettings.Value.currentMask.canInteractWithObjects) return;
             alreadyInteracted = true;
             leverCollider.enabled = false;
+
+            sfxEvent.Raise(doorUnlockedAudioClip);
 
             Sequence unlockSequence = DOTween.Sequence();
             unlockSequence.Append(lockedLever.DOFade(0, 0.3f))

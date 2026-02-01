@@ -1,4 +1,5 @@
 using UnityEngine;
+using cpluiz.GameEventSystem;
 
 namespace cpluiz.Maskformer.Player
 {
@@ -6,6 +7,8 @@ namespace cpluiz.Maskformer.Player
     public class ScenarioMask : MonoBehaviour
     {
         [SerializeField] private CharacterMaskSettings maskSettings;
+        [SerializeField] private GameEvent sfxEvent;
+        [SerializeField] private AudioClip maskSFXAudioClip;
         private SpriteRenderer maskSpriteRenderer;
 
         void Awake()
@@ -18,6 +21,7 @@ namespace cpluiz.Maskformer.Player
         {
             if (collision.CompareTag("Player"))
             {
+                sfxEvent.Raise(maskSFXAudioClip);
                 collision.GetComponent<PlayerController>().AddMaskToCollection(maskSettings);
                 Destroy(transform.gameObject);
             }

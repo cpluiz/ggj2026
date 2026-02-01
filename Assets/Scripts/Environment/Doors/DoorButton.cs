@@ -11,6 +11,8 @@ namespace cpluiz.Maskformer.Environment
         [SerializeField] protected SpriteRenderer unlockedButton;
         [SerializeField] protected GameEvent unlockDoorEvent;
         [SerializeField] private CharacterMaskSettingGameVariable maskSettings;
+        [SerializeField] private GameEvent sfxEvent;
+        [SerializeField] private AudioClip doorUnlockedAudioClip;
         private bool isTouchingPlayer;
         private bool alreadyInteracted;
 
@@ -58,6 +60,8 @@ namespace cpluiz.Maskformer.Environment
             if(!maskSettings.Value.currentMask.canInteractWithObjects) return;
             alreadyInteracted = true;
             buttonCollider.enabled = false;
+
+            sfxEvent.Raise(doorUnlockedAudioClip);
 
             lockedButton.DOFade(0, 0.5f);
             unlockDoorEvent.Raise(false);
