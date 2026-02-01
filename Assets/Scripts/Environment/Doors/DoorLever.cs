@@ -12,21 +12,43 @@ namespace cpluiz.Maskformer.Environment
         [SerializeField] protected SpriteRenderer unlockedLever;
         [SerializeField] protected GameEvent exitDoorEvent;
         [SerializeField] private CharacterMaskSettingGameVariable maskSettings;
+        private bool isTouchingPlayer;
+        private bool alreadyInteracted;
 
         void Awake()
         {
             Fade(intermediateLever, 0, 0);
             Fade(unlockedLever, 0, 0);
         }
+        void OnEnable()
+        {
+            maskSettings.OnValueChanged.AddListener(MaskChanged);
+        }
+        void OnDisable()
+        {
+            maskSettings.OnValueChanged.RemoveListener(MaskChanged);
+        }
+
+        private void MaskChanged()
+        {
+            if(isTouchingPlayer && !alreadyInteracted)
+            {
+                UnlockDoor();
+            }
+        }
         void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                if (maskSettings.Value.currentMask.canInteractWithObjects)
-                {
-                    leverCollider.enabled = false;
-                    UnlockDoor();
-                }
+                isTouchingPlayer = true;    
+                UnlockDoor();
+            }
+        }
+        void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                isTouchingPlayer = false;
             }
         }
         protected void Fade(SpriteRenderer sprite, float targetAlpha, float duration = 0.5f)
@@ -35,6 +57,10 @@ namespace cpluiz.Maskformer.Environment
         }
         public void UnlockDoor()
         {
+            if(!maskSettings.Value.currentMask.canInteractWithObjects) return;
+            alreadyInteracted = true;
+            leverCollider.enabled = false;
+
             Sequence unlockSequence = DOTween.Sequence();
             unlockSequence.Append(lockedLever.DOFade(0, 0.3f))
             .Join(intermediateLever.DOFade(1, 0.3f))
