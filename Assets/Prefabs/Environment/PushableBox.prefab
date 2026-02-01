@@ -161,7 +161,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.9, y: 0.99}
   m_EdgeRadius: 0
 --- !u!114 &8053821311619457587
 MonoBehaviour:
@@ -177,3 +177,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   maskSettings: {fileID: 11400000, guid: 9d5213667664c12419382252e192a16d, type: 2}
+  isPushing: 0
+  isTouchingPlayer: 0
