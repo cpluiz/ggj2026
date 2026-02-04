@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 using cpluiz.GameEventSystem;
 using UnityEngine.SceneManagement;
 using Unity.Collections;
+using Cysharp.Threading;
+using Cysharp.Threading.Tasks;
 
 namespace cpluiz.Maskformer.Player
 {
@@ -36,6 +38,7 @@ namespace cpluiz.Maskformer.Player
         private int preivousMaskID;
         #endregion
 
+        #region Unity Functions
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -52,32 +55,10 @@ namespace cpluiz.Maskformer.Player
         {
             setAsCameraTarget?.Raise(transform);
         }
-
-        public void HorizontalWalk(InputAction.CallbackContext contextParameter)
+        void Update()
         {
-            if (contextParameter.phase == InputActionPhase.Performed)
-            {
-                horizontalWalkValue = contextParameter.ReadValue<Vector2>().x;
-            }
-            if (contextParameter.phase == InputActionPhase.Canceled)
-            {
-                horizontalWalkValue = 0;
-            }
+            // rb.linearVelocityX = 0;
         }
-
-        public void JumpActionPerformed(InputAction.CallbackContext contextParameter)
-        {
-            //TODO Jump only if is on ground
-            //TODO maybe implement double jump for a specific mask
-
-            canJump = isTouchingGround.Value || (maskSettings.Value.currentMask.canJumpInWalls && isTouchingWall.Value);
-            if (contextParameter.phase == InputActionPhase.Started && canJump)
-            {
-                rb.AddForceY(maskSettings.Value.currentMask.jumpForce * jumpForce, ForceMode2D.Impulse);
-                sfxEvent.Raise(maskSettings.Value.currentMask.jumpSFX);
-            }
-        }
-
         void FixedUpdate()
         {
             transform.position = transform.position + Vector3.right * maskSettings.Value.currentMask.walkSpeed * horizontalWalkValue * moveSpeed;
@@ -96,7 +77,49 @@ namespace cpluiz.Maskformer.Player
                     sfxEvent.Raise(stepClip[Random.Range(0, stepClip.Length)]);
                 }
             }
+            // rb.linearVelocityX = 0;
         }
+        #endregion Unity Functions
+
+        #region Event Listeners
+        public void WalkActionPerformed(InputAction.CallbackContext contextParameter)
+        {
+            if (contextParameter.phase == InputActionPhase.Performed)
+            {
+                horizontalWalkValue = contextParameter.ReadValue<Vector2>().x;
+            }
+            if (contextParameter.phase == InputActionPhase.Canceled)
+            {
+                horizontalWalkValue = 0;
+            }
+        }
+
+        public void JumpActionPerformed(InputAction.CallbackContext contextParameter)
+        {
+            //TODO maybe implement double jump for a specific mask
+            canJump = isTouchingGround.Value || (maskSettings.Value.currentMask.canJumpInWalls && isTouchingWall.Value);
+            if (contextParameter.phase == InputActionPhase.Started && canJump)
+            {
+                rb.AddForceY(maskSettings.Value.currentMask.jumpForce * jumpForce, ForceMode2D.Impulse);
+                sfxEvent.Raise(maskSettings.Value.currentMask.jumpSFX);
+            }
+        }
+        public void NextMaskActionPerformed(InputAction.CallbackContext contextParameter)
+        {
+            if(contextParameter.phase == InputActionPhase.Started)
+            {
+                NextMask();
+            }
+        }
+        public void PreviousMaskActionPerformed(InputAction.CallbackContext contextParameter)
+        {
+            if(contextParameter.phase == InputActionPhase.Started)
+            {
+                PreviousMask();
+            }
+        }
+        #endregion Event Listeners
+        
         private void MaskUpdated()
         {
             if(preivousMaskID == maskSettings.Value.currentSelectedMask) return;
@@ -142,21 +165,6 @@ namespace cpluiz.Maskformer.Player
         {
             this.maskSettings.AddMask(maskSettings);
         }
-
-        public void NextMaskActionPerformed(InputAction.CallbackContext contextParameter)
-        {
-            if(contextParameter.phase == InputActionPhase.Started)
-            {
-                NextMask();
-            }
-        }
-        public void PreviousMaskActionPerformed(InputAction.CallbackContext contextParameter)
-        {
-            if(contextParameter.phase == InputActionPhase.Started)
-            {
-                PreviousMask();
-            }
-        }
         public void NextMask()
         {
             maskSettings.NextMask();
@@ -165,6 +173,9 @@ namespace cpluiz.Maskformer.Player
         {
             maskSettings.PreviousMask();
         }
+        #region Async/Coroutine
+        
+        #endregion Async/Coroutine
     }
     
 }

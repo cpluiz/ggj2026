@@ -7,7 +7,14 @@
       "dependencies": {
         "com.yasirkula.assetusagedetector": "https://github.com/yasirkula/UnityAssetUsageDetector.git#v2.5.7"
       },
-      "hash": "119052f0e7dee8f5bec0b3cfc12e61571781e097"
+      "hash": "5ab256d1b982823cd441f0b8b098ac5424d39d62"
+    },
+    "com.cysharp.unitask": {
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "73a63b7f672b88f7e9992f6917eb458a8cbb6fa9"
     },
     "com.unity.2d.animation": {
       "version": "10.2.2",

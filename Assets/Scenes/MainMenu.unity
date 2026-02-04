@@ -1133,6 +1133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a82f62252bd554fac8a4d23995344a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ExitButton: {fileID: 813319411}
 --- !u!82 &1948095405
 AudioSource:
   m_ObjectHideFlags: 0
