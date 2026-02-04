@@ -22,8 +22,7 @@ MonoBehaviour:
     availableMasks:
     - {fileID: 11400000, guid: 2bf950960f2952e46933b972215a58d7, type: 2}
     - {fileID: 11400000, guid: b1357129f8807444b97d9ec79bdaac69, type: 2}
-    - {fileID: 11400000, guid: 36406a4c1fa14dc4d902876f06ba674f, type: 2}
-    currentSelectedMask: 2
+    currentSelectedMask: 1
   OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

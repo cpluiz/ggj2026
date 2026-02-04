@@ -1,0 +1,20 @@
+{
+    "name": "Maskformer.Helpers",
+    "rootNamespace": "cpluiz.Maskformer.Helpers",
+    "references": [
+        "GUID:26f5cf095d4f6e245a9ca3923d28fb99",
+        "GUID:13b458b026ca32a4f8b51f18940e1ce4",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:e4f86a7330c7f574582aa9e413cda9bc",
+        "GUID:4307f53044263cf4b835bd812fc161a4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -461,12 +461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56125e19f2fff814abdbdd1e87031fe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTouchingGround: {fileID: 11400000, guid: bf4f9deb41101aa448a9b8a009218f79, type: 2}
-  isTouchingWall: {fileID: 11400000, guid: aa718a08aa41b8f41884b9b9b8ed585a, type: 2}
   moveSpeed: 0.052
   jumpForce: 5
-  maskSettings: {fileID: 11400000, guid: 9d5213667664c12419382252e192a16d, type: 2}
-  horizontalWalkValue: 0
   stepClip:
   - {fileID: 8300000, guid: ecdd1045823a00a438c2d3f982f2c9db, type: 3}
   - {fileID: 8300000, guid: cb918662af49e1d40a6671fc917564b6, type: 3}
@@ -475,4 +471,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6ee78f59cbf16884f8eeb919dd92c5ae, type: 3}
   maskChangedSFX: {fileID: 8300000, guid: 7575f35c57b120845bf3033f2af7e842, type: 3}
   currentPlayerAnimation: 0
+  horizontalWalkValue: 0
+  maskSettings: {fileID: 11400000, guid: 9d5213667664c12419382252e192a16d, type: 2}
+  isTouchingGround: {fileID: 11400000, guid: bf4f9deb41101aa448a9b8a009218f79, type: 2}
+  isTouchingWall: {fileID: 11400000, guid: aa718a08aa41b8f41884b9b9b8ed585a, type: 2}
   sfxEvent: {fileID: 11400000, guid: 0867ee5e81382734c83784d904b36030, type: 2}
+  setAsCameraTarget: {fileID: 11400000, guid: 1aaf3e918c06fee469f637c3c8c46ab8, type: 2}

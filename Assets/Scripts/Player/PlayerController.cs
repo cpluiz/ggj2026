@@ -1,23 +1,32 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
 using cpluiz.GameEventSystem;
-using System.ComponentModel;
 using UnityEngine.SceneManagement;
+using Unity.Collections;
 
 namespace cpluiz.Maskformer.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private BoolVariable isTouchingGround;
-        [SerializeField] private BoolVariable isTouchingWall;
+        [Header("Player Configuration")]
         [SerializeField] private float moveSpeed = 0.01f;
         [SerializeField] private float jumpForce = 1;
-        [SerializeField] private CharacterMaskSettingGameVariable maskSettings;
-        [SerializeField, ReadOnly(true)] private float horizontalWalkValue;
+        [Header("SFX Settings")]
         //TODO - Change sound list by type of floor
         [SerializeField] private AudioClip[] stepClip;
         [SerializeField] private AudioClip maskChangedSFX;
+        [Header("Debug Information")]
+        [SerializeField, ReadOnly] private CurrentPlayerAnimation currentPlayerAnimation;
+        [SerializeField, ReadOnly] private float horizontalWalkValue;
+        [Header("GameVariables")]
+        [SerializeField] private CharacterMaskSettingGameVariable maskSettings;
+        [SerializeField] private BoolVariable isTouchingGround;
+        [SerializeField] private BoolVariable isTouchingWall;
+        [Header("GameEvents")]
+        [SerializeField] private GameEvent sfxEvent;
+        [SerializeField] private GameEvent setAsCameraTarget;
+
+        #region Private and Protected Fields
         private SpriteRenderer spriteRenderer;
         private Rigidbody2D rb;
         private int currentFrame;
@@ -25,8 +34,7 @@ namespace cpluiz.Maskformer.Player
         private int currentAnimationFrame;
         private bool canJump;
         private int preivousMaskID;
-        [SerializeField] private CurrentPlayerAnimation currentPlayerAnimation;
-        [SerializeField] private GameEvent sfxEvent;
+        #endregion
 
         void Awake()
         {
@@ -39,6 +47,10 @@ namespace cpluiz.Maskformer.Player
         void OnDestroy()
         {
             maskSettings.OnValueChanged.RemoveListener(MaskUpdated);
+        }
+        void Start()
+        {
+            setAsCameraTarget?.Raise(transform);
         }
 
         public void HorizontalWalk(InputAction.CallbackContext contextParameter)
