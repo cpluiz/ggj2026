@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8522820434959369535}
   - component: {fileID: 7964271278796696747}
   m_Layer: 9
-  m_Name: WallChecker
+  m_Name: LeftWallChecker
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1259925318642370986}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.269, y: 0.305, z: 0}
+  m_LocalPosition: {x: -0.269, y: -0.002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTouchingGround: {fileID: 11400000, guid: aa718a08aa41b8f41884b9b9b8ed585a, type: 2}
+  groundFriction: {fileID: 0}
   layersToCheck:
     serializedVersion: 2
     m_Bits: 65
@@ -240,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTouchingGround: {fileID: 11400000, guid: bf4f9deb41101aa448a9b8a009218f79, type: 2}
+  groundFriction: {fileID: 11400000, guid: d6b093a62cc41224fadf0dba30061530, type: 2}
   layersToCheck:
     serializedVersion: 2
     m_Bits: 448
@@ -254,7 +256,7 @@ GameObject:
   - component: {fileID: 1643188025683968011}
   - component: {fileID: 1883211754430540940}
   m_Layer: 9
-  m_Name: WallChecker (1)
+  m_Name: RightWallChecker
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -269,7 +271,7 @@ Transform:
   m_GameObject: {fileID: 6642129680766331655}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.269, y: 0.305, z: 0}
+  m_LocalPosition: {x: 0.269, y: -0.002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -287,7 +289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055ecbcdf505bac47bbe2bfb040b2c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTouchingGround: {fileID: 11400000, guid: aa718a08aa41b8f41884b9b9b8ed585a, type: 2}
+  isTouchingGround: {fileID: 11400000, guid: 80dce44cfaa3f324e86091fe88a41809, type: 2}
+  groundFriction: {fileID: 0}
   layersToCheck:
     serializedVersion: 2
     m_Bits: 65
@@ -302,8 +305,8 @@ GameObject:
   - component: {fileID: 4509245644527086757}
   - component: {fileID: 1024782601067619180}
   - component: {fileID: 166698995058788785}
-  - component: {fileID: 1731330553182208536}
   - component: {fileID: 1205176135737298856}
+  - component: {fileID: 3371810462390538762}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -319,7 +322,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8184744288770257115}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.91, y: -15.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -401,7 +404,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 7a051efb31d790c4599331e721ee97e4, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -412,7 +415,38 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!70 &1731330553182208536
+--- !u!114 &1205176135737298856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8184744288770257115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56125e19f2fff814abdbdd1e87031fe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 1.2
+  jumpForce: 5
+  stepClip:
+  - {fileID: 8300000, guid: ecdd1045823a00a438c2d3f982f2c9db, type: 3}
+  - {fileID: 8300000, guid: cb918662af49e1d40a6671fc917564b6, type: 3}
+  - {fileID: 8300000, guid: 0d1d9b74d7c475345a7c102d6f9e0e36, type: 3}
+  - {fileID: 8300000, guid: d2fe9b494a744bd4a80897c8a7ba3ee2, type: 3}
+  - {fileID: 8300000, guid: 6ee78f59cbf16884f8eeb919dd92c5ae, type: 3}
+  maskChangedSFX: {fileID: 8300000, guid: 7575f35c57b120845bf3033f2af7e842, type: 3}
+  currentPlayerAnimation: 0
+  horizontalWalkValue: 0
+  maskSettings: {fileID: 11400000, guid: 9d5213667664c12419382252e192a16d, type: 2}
+  isTouchingGround: {fileID: 11400000, guid: bf4f9deb41101aa448a9b8a009218f79, type: 2}
+  groundFriction: {fileID: 11400000, guid: d6b093a62cc41224fadf0dba30061530, type: 2}
+  isTouchingLeftWall: {fileID: 11400000, guid: aa718a08aa41b8f41884b9b9b8ed585a, type: 2}
+  isTouchingRightWall: {fileID: 11400000, guid: 80dce44cfaa3f324e86091fe88a41809, type: 2}
+  sfxEvent: {fileID: 11400000, guid: 0867ee5e81382734c83784d904b36030, type: 2}
+  setAsCameraTarget: {fileID: 11400000, guid: 1aaf3e918c06fee469f637c3c8c46ab8, type: 2}
+  maxHorizontalSpeed: 0
+--- !u!70 &3371810462390538762
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -446,34 +480,6 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.4468403}
-  m_Size: {x: 0.5362849, y: 0.8936806}
+  m_Offset: {x: 0, y: 0.44685936}
+  m_Size: {x: 0.5362849, y: 0.8937187}
   m_Direction: 0
---- !u!114 &1205176135737298856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8184744288770257115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56125e19f2fff814abdbdd1e87031fe7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.052
-  jumpForce: 5
-  stepClip:
-  - {fileID: 8300000, guid: ecdd1045823a00a438c2d3f982f2c9db, type: 3}
-  - {fileID: 8300000, guid: cb918662af49e1d40a6671fc917564b6, type: 3}
-  - {fileID: 8300000, guid: 0d1d9b74d7c475345a7c102d6f9e0e36, type: 3}
-  - {fileID: 8300000, guid: d2fe9b494a744bd4a80897c8a7ba3ee2, type: 3}
-  - {fileID: 8300000, guid: 6ee78f59cbf16884f8eeb919dd92c5ae, type: 3}
-  maskChangedSFX: {fileID: 8300000, guid: 7575f35c57b120845bf3033f2af7e842, type: 3}
-  currentPlayerAnimation: 0
-  horizontalWalkValue: 0
-  maskSettings: {fileID: 11400000, guid: 9d5213667664c12419382252e192a16d, type: 2}
-  isTouchingGround: {fileID: 11400000, guid: bf4f9deb41101aa448a9b8a009218f79, type: 2}
-  isTouchingWall: {fileID: 11400000, guid: aa718a08aa41b8f41884b9b9b8ed585a, type: 2}
-  sfxEvent: {fileID: 11400000, guid: 0867ee5e81382734c83784d904b36030, type: 2}
-  setAsCameraTarget: {fileID: 11400000, guid: 1aaf3e918c06fee469f637c3c8c46ab8, type: 2}

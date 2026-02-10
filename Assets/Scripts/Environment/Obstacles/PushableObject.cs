@@ -2,6 +2,7 @@ using UnityEngine;
 using cpluiz.Maskformer.Player;
 using cpluiz.GameEventSystem;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace cpluiz.Maskformer.Environment
 {
@@ -10,8 +11,12 @@ namespace cpluiz.Maskformer.Environment
     {
         [SerializeField] protected Rigidbody2D rb;
         [SerializeField] private CharacterMaskSettingGameVariable maskSettings;
+        // TODO     Change isPushing to a GameVariable to play pushing SFX
+        //          or play SFX with this script/object
         [SerializeField, ReadOnly(true)] private bool isPushing;
         [SerializeField, ReadOnly(true)] private bool isTouchingPlayer;
+        protected List<Collider2D> contactPoints = new();
+        protected int playerContactPoints = 0;
         public void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -28,7 +33,8 @@ namespace cpluiz.Maskformer.Environment
 
         private void MaskChanged()
         {
-            TogglePushState();
+            if(isTouchingPlayer)
+                TogglePushState();
         }
 
         void OnCollisionEnter2D(Collision2D collision)
@@ -41,24 +47,46 @@ namespace cpluiz.Maskformer.Environment
         }
         void OnCollisionExit2D(Collision2D collision)
         {
-            if (collision.gameObject.CompareTag("Player") && isPushing)
+            if (collision.gameObject.CompareTag("Player"))
             {
-                isTouchingPlayer = false;
-                TogglePushState();
+                CheckIfIsCollidingWithPlayer();
             }
         }
 
-        protected void TogglePushState()
+        void LateUpdate()
         {
-            if(!isTouchingPlayer && !isPushing) return;
-            
-            isPushing = isTouchingPlayer && maskSettings.Value.currentMask.canPushObjects;
-            rb.bodyType = isPushing ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic;
+            if(!isPushing) return;
+            isPushing &= isTouchingPlayer;
             if (!isPushing)
             {
                 rb.angularVelocity = 0;
                 rb.linearVelocity = Vector2.zero;
             }
+        }
+        void CheckIfIsCollidingWithPlayer()
+        {
+            rb.GetContacts(contactPoints);
+            playerContactPoints = 0;
+            foreach(Collider2D collider in contactPoints)
+            {
+                if(collider.gameObject.CompareTag("Player"))
+                    playerContactPoints ++;
+            }
+            isTouchingPlayer = playerContactPoints > 0;
+        }
+        void FixedUpdate()
+        {
+            if (!isPushing)
+            {
+                rb.angularVelocity = 0;
+                rb.linearVelocityX = 0;
+            }
+        }
+
+        protected void TogglePushState()
+        {
+            if(!isTouchingPlayer) return;
+            rb.bodyType = maskSettings.Value.currentMask.canPushObjects ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic;
         }
 
     }

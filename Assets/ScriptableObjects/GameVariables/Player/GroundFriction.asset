@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f1ec027ece67e746b532b765c85b6e6, type: 3}
-  m_Name: IsTouchingWall
+  m_Script: {fileID: 11500000, guid: db2c5655e0c3bb445bf6771c7ed4a764, type: 3}
+  m_Name: GroundFriction
   m_EditorClassIdentifier: 
   defaultValue: 0
   value: 0

@@ -23,29 +23,36 @@ namespace cpluiz.Maskformer.Player
         [Header("GameVariables")]
         [SerializeField] private CharacterMaskSettingGameVariable maskSettings;
         [SerializeField] private BoolVariable isTouchingGround;
-        [SerializeField] private BoolVariable isTouchingWall;
+        [SerializeField] private FloatVariable groundFriction;
+        [SerializeField] private BoolVariable isTouchingLeftWall;
+        [SerializeField] private BoolVariable isTouchingRightWall;
         [Header("GameEvents")]
         [SerializeField] private GameEvent sfxEvent;
         [SerializeField] private GameEvent setAsCameraTarget;
 
         #region Private and Protected Fields
+        private bool isTouchingWall { get{ return isTouchingLeftWall.Value || isTouchingRightWall.Value; } }
         private SpriteRenderer spriteRenderer;
         private Rigidbody2D rb;
+        private float playerDefaultFriction;
         private int currentFrame;
         private int animationFrames = 20;
         private int currentAnimationFrame;
         private bool canJump;
         private int preivousMaskID;
+        [SerializeField, ReadOnly] private float maxHorizontalSpeed;
         #endregion
 
         #region Unity Functions
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+            playerDefaultFriction = rb.sharedMaterial.friction;
             spriteRenderer = GetComponent<SpriteRenderer>();
             maskSettings.OnValueChanged.AddListener(MaskUpdated);
             maskSettings.Value.currentMask.SetCurrentAnimationSprites(currentPlayerAnimation);
             SceneManager.activeSceneChanged += ClearAllMasks;
+            maxHorizontalSpeed = maskSettings.Value.currentMask.walkSpeed * moveSpeed;
         }
         void OnDestroy()
         {
@@ -61,7 +68,18 @@ namespace cpluiz.Maskformer.Player
         }
         void FixedUpdate()
         {
-            transform.position = transform.position + Vector3.right * maskSettings.Value.currentMask.walkSpeed * horizontalWalkValue * moveSpeed;
+            rb.sharedMaterial.friction = isTouchingGround.Value ? playerDefaultFriction : 0;
+
+            if(horizontalWalkValue != 0 && !(!isTouchingGround.Value && isTouchingWall))
+                rb.AddForceX(maxHorizontalSpeed * horizontalWalkValue * (rb.mass / Time.fixedDeltaTime), ForceMode2D.Force);
+            else if(isTouchingGround.Value && groundFriction.Value == 1)
+                rb.linearVelocityX = 0;
+            else
+                rb.AddForceX(-rb.linearVelocityX * groundFriction.Value, ForceMode2D.Force);
+                
+            if((!isTouchingWall && !isTouchingGround.Value) || isTouchingGround.Value)
+                rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxHorizontalSpeed, maxHorizontalSpeed);
+            //transform.position = transform.position + Vector3.right * maskSettings.Value.currentMask.walkSpeed * horizontalWalkValue * moveSpeed;
         }
         void LateUpdate()
         {
@@ -97,7 +115,7 @@ namespace cpluiz.Maskformer.Player
         public void JumpActionPerformed(InputAction.CallbackContext contextParameter)
         {
             //TODO maybe implement double jump for a specific mask
-            canJump = isTouchingGround.Value || (maskSettings.Value.currentMask.canJumpInWalls && isTouchingWall.Value);
+            canJump = isTouchingGround.Value || (maskSettings.Value.currentMask.canJumpInWalls && isTouchingWall);
             if (contextParameter.phase == InputActionPhase.Started && canJump)
             {
                 rb.AddForceY(maskSettings.Value.currentMask.jumpForce * jumpForce, ForceMode2D.Impulse);
@@ -124,6 +142,7 @@ namespace cpluiz.Maskformer.Player
         {
             if(preivousMaskID == maskSettings.Value.currentSelectedMask) return;
             
+            maxHorizontalSpeed = maskSettings.Value.currentMask.walkSpeed * moveSpeed;
             preivousMaskID = maskSettings.Value.currentSelectedMask;
             sfxEvent.Raise(maskChangedSFX);
         }
